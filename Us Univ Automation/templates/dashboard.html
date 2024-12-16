@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Dashboard - UniSheet</title>
+</head>
+
+<body class="bg-gray-900 text-gray-100 min-h-screen p-4 sm:p-8">
+    <nav class="bg-gray-800 p-4 mb-8">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center">
+            <a href="/dashboard" class="text-white font-bold text-xl mb-4 sm:mb-0">UniSheet</a>
+            <div class="flex space-x-4">
+                <a href="/dashboard" class="text-gray-300 hover:text-white">
+                    <i class="fas fa-chart-line mr-2"></i>Dashboard
+                </a>
+                <a href="/form" class="text-gray-300 hover:text-white">
+                    <i class="fas fa-plus-circle mr-2"></i>Add Entry
+                </a>
+                <a href="/logout" class="text-gray-300 hover:text-white">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="max-w-6xl mx-auto text-center">
+        <h1 class="text-3xl font-bold mb-8 text-indigo-400">Dashboard</h1>
+
+        {% if error %}
+        <div class="bg-red-900 text-red-200 p-4 rounded-lg mb-6">{{ error }}</div>
+        {% endif %}
+
+        <div class="overflow-x-auto rounded-lg shadow">
+            <table class="w-full">
+                <thead class="bg-gray-800"></a>
+                    <tr>
+                        <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                            University Name</th>
+                        <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Type
+                        </th>
+                        <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                            Financial Aid</th>
+                        <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                            Safety/Reach</th>
+                        <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                            ED/RD Deadline</th>
+                        <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                            CSS Deadline</th>    
+                        <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                            SAT Required</th>
+                        <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                            SAT Range</th>
+                        <th class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                            Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-gray-800 divide-y divide-gray-700">
+                    {% if not entries %}
+                    <tr>
+                        <td colspan="9" class="px-6 py-4 text-center text-gray-400">
+                            No entries yet. <a href="/form" class="text-indigo-400 hover:text-indigo-300">Add your first entry</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% for entry in entries %}
+                    <tr class="hover:bg-gray-700 transition-colors">
+                        <td class="px-2 sm:px-6 py-4 whitespace-nowrap">{{ entry.name }}</td>
+                        <td class="px-2 sm:px-6 py-4 whitespace-nowrap">{{ entry.type }}</td>
+                        <td class="px-2 sm:px-6 py-4 whitespace-nowrap">{{ entry.financial_aid }}</td>
+                        <td class="px-2 sm:px-6 py-4 whitespace-nowrap">{{ entry.safety_reach }}</td>
+                        <td class="px-2 sm:px-6 py-4 whitespace-nowrap">{{ entry.ed_rd_deadline }}</td>
+                        <td class="px-2 sm:px-6 py-4 whitespace-nowrap">{{ entry.css_deadline }}</td>
+                        <td class="px-2 sm:px-6 py-4 whitespace-nowrap">{{ entry.sat_required }}</td>
+                        <td class="px-2 sm:px-6 py-4 whitespace-nowrap">{{ entry.sat_range }}</td>
+                        <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+                            <form action="/entry/{{ entry.id }}/delete" method="post">
+                                <button type="submit"
+                                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm transition-colors">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

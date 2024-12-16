@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniSheet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen py-12 px-4 sm:px-6">
+    <nav class="bg-gray-800 p-4 mb-8">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="/dashboard" class="text-white font-bold text-xl">UniSheet</a>
+            <div class="flex space-x-4">
+                <a href="/dashboard" class="text-gray-300 hover:text-white">
+                    <i class="fas fa-chart-line mr-2"></i>Dashboard
+                </a>
+                <a href="/form" class="text-gray-300 hover:text-white">
+                    <i class="fas fa-plus-circle mr-2"></i>Add Entry
+                </a>
+                <a href="/logout" class="text-gray-300 hover:text-white">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 rounded-2xl shadow-xl mb-8">
+            <div class="bg-gray-900 rounded-2xl p-6">
+                <h1
+                    class="text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-400">
+                    UniSheet
+                </h1>
+            </div>
+        </div>
+
+        <!-- templates/form.html - Add after header -->
+        {% if error %}
+        <div class="bg-red-600/80 backdrop-blur-sm border border-red-500 text-white px-4 py-3 rounded-lg mb-4">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <div class="bg-gray-800/50 backdrop-blur-xl rounded-2xl p-8 shadow-xl mt-8">
+            <form action="/submit/" method="post" enctype="multipart/form-data" class="space-y-8">
+                <div class="space-y-6 p-6 bg-gray-800/30 rounded-xl">
+                    <h2 class="text-2xl font-semibold text-gray-200 mb-4">
+                        <i class="fas fa-university mr-2 text-indigo-400"></i>University Details
+                    </h2>
+                    
+                    <!-- Name input -->
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-300 mb-2">University Name</label>
+                        <div class="relative">
+                            <input type="text" id="name" name="name" required placeholder="Enter university name"
+                                class="block w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-gray-200">
+                            <i class="fas fa-school absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Type and Financial Aid -->
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <div>
+                            <label for="type" class="block text-sm font-medium text-gray-300 mb-2">Type</label>
+                            <div class="relative">
+                                <select id="type" name="type" required
+                                    class="block w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-gray-200">
+                                    <option value="" disabled selected>Select type</option>
+                                    <option value="LAC">Liberal Arts College</option>
+                                    <option value="University">University</option>
+                                </select>
+                                <i class="fas fa-graduation-cap absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="financial_aid" class="block text-sm font-medium text-gray-300 mb-2">Financial Aid</label>
+                            <div class="relative">
+                                <input type="text" id="financial_aid" name="financial_aid" required
+                                    placeholder="Enter financial aid details"
+                                    class="block w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-gray-200">
+                                <i class="fas fa-dollar-sign absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Deadlines -->
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <div>
+                            <label for="ed_rd_deadline" class="block text-sm font-medium text-gray-300 mb-2">ED/RD Deadline</label>
+                            <div class="relative">
+                                <input type="date" id="ed_rd_deadline" name="ed_rd_deadline" required
+                                    class="block w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-gray-200">
+                                <i class="fas fa-calendar absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="css_deadline" class="block text-sm font-medium text-gray-300 mb-2">CSS Deadline</label>
+                            <div class="relative">
+                                <input type="date" id="css_deadline" name="css_deadline" required
+                                    class="block w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-gray-200">
+                                <i class="fas fa-calendar-alt absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Safety/Reach -->
+                    <div>
+                        <label for="safety_reach" class="block text-sm font-medium text-gray-300 mb-2">Safety/Reach</label>
+                        <div class="relative">
+                            <select id="safety_reach" name="safety_reach" required
+                                class="block w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-gray-200">
+                                <option value="" disabled selected>Select status</option>
+                                <option value="Safety">Safety</option>
+                                <option value="Target">Target</option>
+                                <option value="Reach">Reach</option>
+                            </select>
+                            <i class="fas fa-bullseye absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Add after Safety/Reach section -->
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <div>
+                            <label for="sat_required" class="block text-sm font-medium text-gray-300 mb-2">SAT Required</label>
+                            <div class="relative">
+                                <select id="sat_required" name="sat_required" required
+                                    class="block w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-gray-200">
+                                    <option value="" disabled selected>Select option</option>
+                                    <option value="Required">Required</option>
+                                    <option value="Optional">Optional</option>
+                                    <option value="Test Blind">Test Blind</option>
+                                </select>
+                                <i class="fas fa-clipboard-check absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="sat_range" class="block text-sm font-medium text-gray-300 mb-2">SAT Range</label>
+                            <div class="relative">
+                                <input type="text" id="sat_range" name="sat_range" required
+                                    placeholder="e.g., 1350-1520"
+                                    class="block w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-gray-200">
+                                <i class="fas fa-chart-bar absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                    class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-4 px-6 rounded-xl font-semibold text-lg shadow-lg hover:from-indigo-600 hover:to-purple-600 transform hover:-translate-y-0.5 transition-all duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:outline-none">
+                    <i class="fas fa-paper-plane mr-2"></i>Submit
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden" id="toast">
+        Form submitted successfully!
+    </div>
+</body>
+
+</html>
